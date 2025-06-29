@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.zip
+.env
+output.json
+dns_payload.json
+*.csv
+*.log

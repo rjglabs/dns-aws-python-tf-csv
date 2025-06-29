@@ -1,0 +1,5 @@
+# Test and lint requirements for CI
+pytest
+flake8
+black
+isort

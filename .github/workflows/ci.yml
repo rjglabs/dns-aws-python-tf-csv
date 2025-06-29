@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r test-requirements.txt
+
+      - name: Run unittest
+        run: |
+          python -m unittest discover -s test
+
+      - name: Run black
+        run: |
+          black --line-length 79 parse_dns_csvs.py
+
+      - name: Run flake8
+        run: |
+          flake8 parse_dns_csvs.py
+
+      - name: Run isort
+        run: |
+          isort parse_dns_csvs.py
