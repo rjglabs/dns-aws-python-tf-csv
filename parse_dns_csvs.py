@@ -29,7 +29,7 @@ def write_log(message: str) -> None:
     try:
         with open(log_path, "a", encoding="utf-8") as logf:
             logf.write(timestamped + "\n")
-    except (IOError, OSError, PermissionError) as e:
+    except (IOError, OSError) as e:
         # Only catch specific file-related exceptions
         # Print to stderr if we can't write to log file
         print(
