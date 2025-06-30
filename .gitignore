@@ -5,10 +5,23 @@ dns_payload.json
 # Ignore Python environment and cache files
 __pycache__/
 *.py[cod]
-8.pyc
+*.pyc
 *.pyo
 *.pyd
+.venv/
+venv/
+env/
 
+# Ignore Python testing and coverage files
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
 
 # Ignore VS Code settings
 .vscode/
@@ -23,13 +36,61 @@ Thumbs.db
 
 # Ignore log files
 *.log
+populate_dns_csvs.log
 
 # Ignore scannerworks folders
 .scannerwork/
 .sonar/
 ./sonar/*
 
+# Ignore Terraform files
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+.terraformrc
+terraform.rc
+
+# Ignore security scan reports
+tfsec-report.*
+checkov-report.*
+snyk-report.*
+bandit-report.*
+safety-report.*
+
+# Ignore dependency files (auto-generated)
+requirements.txt
+
 # Ignore logs and output folders
 logs/
 output/
+
 # Ignore Excel output files in output folder
+*.xlsx
+*.xls
+
+# Ignore temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Ignore IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Ignore package files
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Ignore mypy cache
+.mypy_cache/
+.dmypy.json
+dmypy.json
