@@ -70,7 +70,7 @@ jobs:
 
       - name: Run dependency vulnerability scanning with Safety
         run: |
-          poetry run safety scan --output text --continue-on-error
+          poetry run safety scan --output screen --continue-on-error
         continue-on-error: true
 
       - name: Run dependency vulnerability scanning with pip-audit

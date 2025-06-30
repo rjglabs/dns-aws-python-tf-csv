@@ -206,35 +206,40 @@ resource "aws_route53_record" "sshfp_record" {
   records = [format("%s %s %s", each.value.algorithm, each.value.type, each.value.fingerprint)]
 }
 # --- URI Records ---
-resource "aws_route53_record" "uri_record" {
-  for_each = try({ for rec in data.external.dns_records.result.uri_records : rec.record_name => rec }, {})
-  zone_id  = each.value.zone_id
-  name     = each.value.record_name
-  type     = "URI"
-  ttl      = tonumber(each.value.ttl)
-  # URI format: priority weight target
-  records = [format("%s %s %s", each.value.priority, each.value.weight, each.value.target)]
-}
+# Note: URI records are not supported by AWS Route53
+# resource "aws_route53_record" "uri_record" {
+#   for_each = try({ for rec in data.external.dns_records.result.uri_records : rec.record_name => rec }, {})
+#   zone_id  = each.value.zone_id
+#   name     = each.value.record_name
+#   type     = "URI"
+#   ttl      = tonumber(each.value.ttl)
+#   # URI format: priority weight target
+#   records = [format("%s %s %s", each.value.priority, each.value.weight, each.value.target)]
+# }
+
 # --- LOC Records ---
-resource "aws_route53_record" "loc_record" {
-  for_each = try({ for rec in data.external.dns_records.result.loc_records : rec.record_name => rec }, {})
-  zone_id  = each.value.zone_id
-  name     = each.value.record_name
-  type     = "LOC"
-  ttl      = tonumber(each.value.ttl)
-  # LOC format: version size horiz_precision vert_precision latitude longitude altitude
-  records = [format("%s %s %s %s %s %s %s", each.value.version, each.value.size, each.value.horiz_precision, each.value.vert_precision, each.value.latitude, each.value.longitude, each.value.altitude)]
-}
+# Note: LOC records are not supported by AWS Route53
+# resource "aws_route53_record" "loc_record" {
+#   for_each = try({ for rec in data.external.dns_records.result.loc_records : rec.record_name => rec }, {})
+#   zone_id  = each.value.zone_id
+#   name     = each.value.record_name
+#   type     = "LOC"
+#   ttl      = tonumber(each.value.ttl)
+#   # LOC format: version size horiz_precision vert_precision latitude longitude altitude
+#   records = [format("%s %s %s %s %s %s %s", each.value.version, each.value.size, each.value.horiz_precision, each.value.vert_precision, each.value.latitude, each.value.longitude, each.value.altitude)]
+# }
+
 # --- CERT Records ---
-resource "aws_route53_record" "cert_record" {
-  for_each = try({ for rec in data.external.dns_records.result.cert_records : rec.record_name => rec }, {})
-  zone_id  = each.value.zone_id
-  name     = each.value.record_name
-  type     = "CERT"
-  ttl      = tonumber(each.value.ttl)
-  # CERT format: flags tag value
-  records = [format("%s %s %s", each.value.flags, each.value.tag, each.value.value)]
-}
+# Note: CERT records are not supported by AWS Route53
+# resource "aws_route53_record" "cert_record" {
+#   for_each = try({ for rec in data.external.dns_records.result.cert_records : rec.record_name => rec }, {})
+#   zone_id  = each.value.zone_id
+#   name     = each.value.record_name
+#   type     = "CERT"
+#   ttl      = tonumber(each.value.ttl)
+#   # CERT format: flags tag value
+#   records = [format("%s %s %s", each.value.flags, each.value.tag, each.value.value)]
+# }
 # --- SVCB Records ---
 resource "aws_route53_record" "svc_record" {
   for_each = try({ for rec in data.external.dns_records.result.svcb_records : rec.record_name => rec }, {})
