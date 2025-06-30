@@ -1,9 +1,28 @@
-[tool.poetry]
+[project]
 name = "dns-aws-python-tf-csv"
 version = "0.1.0"
 description = "DNS CSV parser for AWS Route53 automation with Terraform"
-authors = ["Rich Geiger <geiger_richard@hotmail.com>"]
+authors = [
+    {name = "Rich Geiger", email = "geiger_richard@hotmail.com"}
+]
 readme = "README.md"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "coverage>=7.0",
+    "black>=24.0",
+    "flake8>=7.0",
+    "isort>=5.0",
+    "mypy>=1.0",
+    "bandit>=1.7",
+    "safety>=3.0",
+    "pip-audit>=2.7"
+]
+
+[tool.poetry]
 package-mode = false
 
 [tool.poetry.dependencies]

@@ -74,10 +74,10 @@ jobs:
         run: |
           poetry run bandit -r parse_dns_csvs.py
 
-      - name: Run dependency vulnerability scanning with Safety
-        run: |
-          poetry run safety scan --output screen --continue-on-error
-        continue-on-error: true
+      # - name: Run dependency vulnerability scanning with Safety
+      #   run: |
+      #     poetry run safety scan --output screen --continue-on-error
+      #   continue-on-error: true
 
       - name: Run dependency vulnerability scanning with pip-audit
         run: |

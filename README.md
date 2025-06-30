@@ -128,7 +128,7 @@ This project implements **enterprise-grade security and code quality standards**
 | Tool | Purpose | Status |
 |------|---------|--------|
 | **Bandit** | Python security vulnerability scanner | ✅ Active |
-| **Safety** | Python dependency vulnerability database | ✅ Active |
+| **Safety** | Python dependency vulnerability database | ✅ Active (Dedicated Workflow) |
 | **pip-audit** | Python package security auditing | ✅ Active |
 | **Snyk** | Comprehensive vulnerability scanning | ✅ Active |
 | **Snyk IaC** | Infrastructure security analysis | ✅ Active |
