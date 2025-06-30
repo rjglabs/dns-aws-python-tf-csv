@@ -2,9 +2,10 @@
 name = "dns-aws-python-tf-csv"
 version = "0.1.0"
 description = "DNS CSV parser for AWS Route53 automation with Terraform"
-authors = ["Rich Geiger <geiger_richard@hotmail.com>"]
+authors = [
+    { name = "Rich Geiger", email = "geiger_richard@hotmail.com" }
+]
 readme = "README.md"
-package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.9"
