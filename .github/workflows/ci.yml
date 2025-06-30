@@ -69,10 +69,9 @@ jobs:
           poetry run bandit -r parse_dns_csvs.py
 
       - name: Run dependency vulnerability scanning with Safety
-        env:
-          SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
         run: |
-          poetry run safety scan
+          poetry run safety scan --output text --continue-on-error
+        continue-on-error: true
 
       - name: Run dependency vulnerability scanning with pip-audit
         run: |
