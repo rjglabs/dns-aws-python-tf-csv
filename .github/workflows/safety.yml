@@ -5,8 +5,10 @@
 name: Safety Security Scan
 
 on:
-  push: # Run on every push to any branch
-  pull_request: # Run on new pull requests
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
 
 jobs:
   safety:
