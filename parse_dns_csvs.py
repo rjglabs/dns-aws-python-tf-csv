@@ -18,7 +18,7 @@ import datetime
 import json
 import os
 import sys
-from typing import Dict, List, Any
+from typing import Any, Dict, List
 
 base = os.path.dirname(__file__)
 log_path = os.path.join(base, "parse_dns_csvs.log")
