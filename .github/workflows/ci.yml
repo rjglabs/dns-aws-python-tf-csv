@@ -129,10 +129,18 @@ jobs:
         run: |
           # Install TFSec
           curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
+          # Print TFSec version and path
+          which tfsec
+          tfsec --version
           # Run TFSec with SARIF output for GitHub integration
           tfsec . --format=sarif --out=tfsec-report.sarif --minimum-severity=MEDIUM
           # Also generate JSON report
           tfsec . --format=json --out=tfsec-report.json
+          # List files in workspace to check for SARIF output
+          echo "Listing files in workspace after TFSec run:"
+          ls -lh
+          echo "Listing tfsec-report.* files:"
+          ls -lh tfsec-report.* || echo "No tfsec-report.* files found"
         continue-on-error: true
 
       - name: Upload TFSec SARIF results to GitHub Security
