@@ -11,5 +11,5 @@ variable "aws_region" {
 variable "python_script_path" {
   description = "Path to the Python script for DNS CSV parsing."
   type        = string
-  default     = "${path.module}/parse_dns_csvs.py"
+  default     = "./parse_dns_csvs.py"
 }

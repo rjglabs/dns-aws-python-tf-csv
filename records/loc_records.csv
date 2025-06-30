@@ -1,0 +1,2 @@
+"enabled","record_name","version","size","horiz_precision","vert_precision","latitude","longitude","altitude","zone_id","ttl","comment"
+"yes","loc.example.com","0","1","10000","10","37 47 0.000 N","122 24 0.000 W","10.00m","Z046442633YP8JTC6AZR3","300","LOC record"

@@ -28,8 +28,13 @@ def write_log(message):
     try:
         with open(log_path, "a", encoding="utf-8") as logf:
             logf.write(timestamped + "\n")
-    except Exception:
-        pass  # Don't break script on log failure
+    except (IOError, OSError, PermissionError) as e:
+        # Only catch specific file-related exceptions
+        # Print to stderr if we can't write to log file
+        print(
+            f"Warning: Could not write to log file {log_path}: {e}",
+            file=sys.stderr,
+        )
     # Print to console if interactive
     if sys.stdout.isatty():
         print(timestamped)

@@ -1,0 +1,2 @@
+"enabled","record_name","alias_target_dns","alias_hosted_zone_id","zone_id","ttl","comment"
+"yes","root.aws.rjglabs.com","dualstack.elb.amazonaws.com","Z35SXDOTRQ7X7K","Z046442633YP8JTC6AZR3","60","ELB alias"

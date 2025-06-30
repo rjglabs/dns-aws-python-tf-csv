@@ -1,0 +1,2 @@
+"enabled","record_name","priority","params","zone_id","ttl","comment"
+"yes","_https.example.com","1","alpn=h2 port=443","Z046442633YP8JTC6AZR3","300","HTTPS record"

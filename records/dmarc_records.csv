@@ -1,0 +1,2 @@
+"enabled","record_name","txt_value","zone_id","ttl","comment"
+"yes","_dmarc.aws.rjglabs.com","v=DMARC1; p=quarantine; rua=mailto:dmarc-reports@aws.rjglabs.com","Z046442633YP8JTC6AZR3","300","DMARC policy for AWS domain"

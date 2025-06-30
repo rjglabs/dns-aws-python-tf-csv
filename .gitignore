@@ -1,8 +1,35 @@
-__pycache__/
-*.pyc
-*.zip
-.env
+# Ignore Python bytecode files
 output.json
 dns_payload.json
-*.csv
+
+# Ignore Python environment and cache files
+__pycache__/
+*.py[cod]
+8.pyc
+*.pyo
+*.pyd
+
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore dotenv environment files
+.env
+.env.*
+
+# Ignore log files
 *.log
+
+# Ignore scannerworks folders
+.scannerwork/
+.sonar/
+./sonar/*
+
+# Ignore logs and output folders
+logs/
+output/
+# Ignore Excel output files in output folder

@@ -1,0 +1,2 @@
+"enabled","record_name","ipv6_addr","zone_id","ttl","comment"
+"yes","ipv6.aws.rjglabs.com","2001:0db8:85a3:0000:0000:8a2e:0370:7334","Z046442633YP8JTC6AZR3","300","IPv6 app server"

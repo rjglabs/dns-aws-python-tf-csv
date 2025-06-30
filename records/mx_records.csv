@@ -1,0 +1,2 @@
+"enabled","record_name","priority","mail_server","zone_id","ttl","comment"
+"yes","aws.rjglabs.com","10","mail1.aws.rjglabs.com","Z046442633YP8JTC6AZR3","300","Primary mail server"

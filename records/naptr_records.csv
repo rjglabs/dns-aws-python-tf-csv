@@ -1,0 +1,2 @@
+"enabled","record_name","order","preference","flags","service","regexp","replacement","zone_id","ttl","comment"
+"yes","_sip._udp.example.com","100","50","s","SIP+D2U","!^.*$!sip:info@example.com!.",".","Z046442633YP8JTC6AZR3","300","NAPTR record"

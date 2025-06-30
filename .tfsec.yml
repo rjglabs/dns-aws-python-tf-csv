@@ -1,0 +1,20 @@
+# TFSec configuration for DNS automation project
+# Configure security scanning for Route53 DNS record management
+
+# Minimum severity level
+minimum_severity: "LOW"
+
+# Include passing checks in output
+include_passed: false
+
+# Output format
+format: "default"
+
+# Exclude specific checks if needed (none currently needed)
+exclude_checks: []
+
+# Include specific checks
+include_checks: []
+
+# Soft fail mode - don't exit with error code
+soft_fail: false

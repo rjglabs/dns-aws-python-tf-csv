@@ -1,0 +1,2 @@
+"enabled","record_name","txt_value","zone_id","ttl","comment"
+"yes","spf.aws.rjglabs.com","v=spf1 include:mailgun.org ~all","Z046442633YP8JTC6AZR3","300","SPF record"

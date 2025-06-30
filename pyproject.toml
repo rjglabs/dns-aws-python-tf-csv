@@ -1,0 +1,38 @@
+[tool.poetry]
+package-mode = false
+
+[project]
+name = "dns-aws-python-tf-csv"
+version = "0.1.0"
+description = "Automation tool for parsing of CSV files via Python to feed to Terraform."
+authors = [
+    { name = "Rich Geiger", email = "geiger_richard@hotmail.com" }
+]
+requires-python = ">=3.9.2,<4.0"
+dependencies = [
+    "poetry-plugin-export (>=1.9.0,<2.0.0)",
+    "urllib3 (>=2.5.0)",
+    "setuptools (>=78.1.1)",
+    "cryptography (>=44.0.1)"
+]
+
+[tool.poetry.group.dev.dependencies]
+black = ">=24.3.0"
+flake8 = "*"
+isort = "*"
+coverage = "*"
+pytest = "*"
+mypy = "*"
+bandit = "*"
+types-requests = "*"
+safety = "*"
+pip-audit = "*"
+checkov = "*"
+
+[tool.mypy]
+ignore_missing_imports = true
+disable_error_code = ["union-attr"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

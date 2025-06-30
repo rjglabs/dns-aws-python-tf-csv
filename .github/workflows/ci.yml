@@ -18,23 +18,125 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: latest
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r test-requirements.txt
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
 
-      - name: Run unittest
+      - name: Run tests with coverage
         run: |
-          python -m unittest discover -s test
+          poetry run coverage run --source=. -m pytest test/
+          poetry run coverage report --show-missing
+          poetry run coverage xml
 
-      - name: Run black
-        run: |
-          black --line-length 79 parse_dns_csvs.py
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: false
 
-      - name: Run flake8
+      - name: Run code formatting checks
         run: |
-          flake8 parse_dns_csvs.py
+          poetry run black --check --line-length 79 parse_dns_csvs.py
 
-      - name: Run isort
+      - name: Run linting
         run: |
-          isort parse_dns_csvs.py
+          poetry run flake8 parse_dns_csvs.py
+
+      - name: Run import sorting check
+        run: |
+          poetry run isort --check-only parse_dns_csvs.py
+
+      - name: Run type checking
+        run: |
+          poetry run mypy parse_dns_csvs.py
+
+      - name: Run security scanning with Bandit
+        run: |
+          poetry run bandit -r parse_dns_csvs.py
+
+      - name: Run dependency vulnerability scanning with Safety
+        env:
+          SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
+        run: |
+          poetry run safety scan
+
+      - name: Run dependency vulnerability scanning with pip-audit
+        run: |
+          poetry run pip-audit
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Run Snyk vulnerability scanning
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          npm install -g snyk
+          snyk auth $SNYK_TOKEN
+          snyk test --severity-threshold=medium
+          snyk iac test --severity-threshold=medium
+        continue-on-error: true
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.0
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Init
+        run: terraform init -backend=false
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Install TFLint
+        run: |
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+
+      - name: Run TFLint
+        run: |
+          tflint --init
+          tflint
+
+      - name: Install Checkov
+        run: pip install checkov
+
+      - name: Run Checkov Security Scan
+        run: |
+          checkov -d . --framework terraform --config-file .checkov.yml --output cli --output json --output-file-path checkov-report.json
+        continue-on-error: true
+
+      - name: Install and Run TFSec Security Scan
+        run: |
+          # Install TFSec
+          curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
+          # Run TFSec with SARIF output for GitHub integration
+          tfsec . --format=sarif --out=tfsec-report.sarif --minimum-severity=MEDIUM
+          # Also generate JSON report
+          tfsec . --format=json --out=tfsec-report.json
+        continue-on-error: true
+
+      - name: Upload TFSec SARIF results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: tfsec-report.sarif

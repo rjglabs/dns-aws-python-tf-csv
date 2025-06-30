@@ -1,0 +1,2 @@
+"enabled","record_name","priority","weight","target","zone_id","ttl","comment"
+"yes","sip.example.com","10","1","sip:info@example.com","Z046442633YP8JTC6AZR3","300","URI record"

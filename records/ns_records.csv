@@ -1,0 +1,2 @@
+"enabled","record_name","ns_server","zone_id","ttl","comment"
+"yes","aws.rjglabs.com","ns-2048.awsdns-64.com","Z046442633YP8JTC6AZR3","172800","Delegation to AWS NS"

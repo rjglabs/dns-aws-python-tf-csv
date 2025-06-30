@@ -1,0 +1,2 @@
+"enabled","record_name","priority","weight","port","target","zone_id","ttl","comment"
+"yes","_sip._tcp.aws.rjglabs.com","10","5","5060","sipserver.aws.rjglabs.com","Z046442633YP8JTC6AZR3","300","VoIP service"

@@ -1,0 +1,2 @@
+"enabled","record_name","usage","selector","matching","zone_id","ttl","comment"
+"yes","_443._tcp.example.com","3","1","1","Z046442633YP8JTC6AZR3","300","TLSA record"

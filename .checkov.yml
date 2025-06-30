@@ -1,0 +1,16 @@
+# Checkov configuration file for DNS automation project
+# Configure security scanning for Route53 DNS record management
+
+# Skip checks that are not applicable to our IP-based DNS automation use case
+skip-check:
+  # Route53 A Record attached resource check - not applicable for IP-based DNS records
+  # This check expects A records to point to AWS resources (ALB, CloudFront, etc.)
+  # but our automation creates records pointing to external IP addresses
+  - CKV2_AWS_23
+
+# Enable specific frameworks
+framework:
+  - terraform
+
+# Output configuration
+output: cli
