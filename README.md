@@ -1,6 +1,7 @@
 # DNS AWS Python Terraform CSV
 
 [![CI](https://github.com/rjglabs/dns-aws-python-tf-csv/actions/workflows/ci.yml/badge.svg)](https://github.com/rjglabs/dns-aws-python-tf-csv/actions/workflows/ci.yml)
+[![Safety Security Scan](https://github.com/rjglabs/dns-aws-python-tf-csv/actions/workflows/safety.yml/badge.svg)](https://github.com/rjglabs/dns-aws-python-tf-csv/actions/workflows/safety.yml)
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=rjglabs_dns-aws-python-tf-csv&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=rjglabs_dns-aws-python-tf-csv)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=rjglabs_dns-aws-python-tf-csv&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=rjglabs_dns-aws-python-tf-csv)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=rjglabs_dns-aws-python-tf-csv&metric=coverage)](https://sonarcloud.io/summary/new_code?id=rjglabs_dns-aws-python-tf-csv)
@@ -35,6 +36,8 @@ dns-aws-python-tf-csv/
 │   └── ... (20+ DNS record types)
 ├── 🧪 test/                      # Python test suite
 ├── ⚙️ .github/workflows/         # CI/CD pipeline configuration
+│   ├── ci.yml                    # Main CI workflow with 15+ checks
+│   └── safety.yml                # Dedicated Safety CLI security scanning
 ├── 🔧 pyproject.toml            # Python project configuration
 └── 📝 README.md                 # This file
 ```
@@ -51,9 +54,12 @@ The `parse_dns_csvs.py` script processes DNS record CSV files and converts them 
 - 🧹 **Data Cleaning** - Removes administrative columns from output
 
 ### Supported DNS Record Types
+**Currently Supported (Active in Terraform):**
 - A, AAAA, CNAME, MX, NS, SRV, PTR, CAA
 - SPF, DMARC, TXT, SOA, NAPTR, TLSA, SSHFP
-- SVCB, HTTPS, URI, LOC, CERT
+- SVCB, HTTPS
+
+**Note:** URI, LOC, and CERT record types are commented out in `main.tf` as they are not currently supported by the AWS provider.
 
 ### Usage
 ```bash
@@ -69,10 +75,11 @@ poetry run python parse_dns_csvs.py
 The Terraform configuration automates DNS record creation in AWS Route53 based on the JSON output from the Python parser.
 
 ### Components
-- **Provider Configuration** - AWS provider with configurable region
+- **Provider Configuration** - AWS provider with configurable region and external provider versioning
 - **Data Sources** - External data source for Python script execution
-- **Route53 Records** - Dynamic resource creation for all DNS record types
+- **Route53 Records** - Dynamic resource creation for all supported DNS record types
 - **Variables** - Configurable parameters for flexibility
+- **Security** - TFLint, Checkov, and TFSec validated configuration
 
 ### Usage
 ```bash
@@ -158,7 +165,10 @@ This project implements **enterprise-grade security and code quality standards**
 
 ## 🚀 CI/CD Pipeline
 
-The GitHub Actions workflow provides comprehensive automation with the following stages:
+The project features **dual GitHub Actions workflows** for comprehensive automation:
+
+### 📋 **Main CI Workflow** (`.github/workflows/ci.yml`)
+Primary workflow with 15+ automated checks running on every push and pull request to the main branch.
 
 ### 🏗️ Build & Setup
 - Python 3.11 environment setup
@@ -190,6 +200,31 @@ The GitHub Actions workflow provides comprehensive automation with the following
 - JSON reports for artifact storage
 - Coverage reports to Codecov
 - SonarCloud integration
+
+### 🛡️ **Safety Security Workflow** (`.github/workflows/safety.yml`)
+Dedicated workflow specifically for Safety CLI dependency vulnerability scanning using the official `pyupio/safety-action@v1`.
+
+**Features:**
+- ✅ **Dedicated Security Focus** - Isolated Safety CLI scanning
+- ✅ **Official Action** - Uses `pyupio/safety-action@v1` from Safety CLI team
+- ✅ **API Key Authentication** - Secure authentication with `SAFETY_API_KEY` secret
+- ✅ **Parallel Execution** - Runs independently of main CI workflow
+- ✅ **Comprehensive Coverage** - Scans all Python dependencies for known vulnerabilities
+
+## 🔐 Required GitHub Secrets
+
+To run all workflows successfully, configure these secrets in your GitHub repository settings:
+
+```bash
+# Safety CLI API Key (get from https://safetycli.com/resources/plans)
+SAFETY_API_KEY=your_safety_api_key_here
+
+# SonarCloud integration token
+SONAR_TOKEN=your_sonar_token_here
+
+# Snyk vulnerability scanning token
+SNYK_TOKEN=your_snyk_token_here
+```
 
 ## 🔧 Development Setup
 
@@ -223,7 +258,7 @@ poetry run mypy parse_dns_csvs.py
 poetry run bandit -r parse_dns_csvs.py
 
 # Run security scans
-poetry run safety scan
+poetry run safety scan --api-key YOUR_SAFETY_API_KEY
 poetry run pip-audit
 snyk test
 snyk iac test
@@ -235,20 +270,34 @@ poetry run coverage report --show-missing
 # Terraform validation
 terraform fmt -check
 terraform validate
-poetry run checkov -d . --framework terraform
+terraform init -backend=false
+checkov -d . --framework terraform
 tfsec .
+
+# Run complete CI simulation locally
+poetry run black --check --line-length 79 parse_dns_csvs.py && \
+poetry run flake8 parse_dns_csvs.py && \
+poetry run isort --check-only parse_dns_csvs.py && \
+poetry run mypy parse_dns_csvs.py && \
+poetry run bandit -r parse_dns_csvs.py && \
+poetry run coverage run -m pytest test/ && \
+terraform fmt -check && \
+terraform validate
 ```
 
 ## 📈 Quality Metrics
 
-Current project health metrics:
+Current project health metrics (last updated: June 2025):
 
 - **Code Coverage**: 100% (Python codebase)
-- **Security Vulnerabilities**: 0 known issues
+- **Security Vulnerabilities**: 0 known issues (Bandit, Safety, pip-audit, Snyk)
 - **Code Quality**: SonarCloud Grade A
 - **Test Coverage**: 100% line coverage
 - **Security Hotspots**: 0 active issues
 - **Technical Debt**: < 5 minutes
+- **Terraform Security**: ✅ TFSec, Checkov, Snyk IaC validated
+- **Exception Handling**: ✅ Optimized (no redundant exception classes)
+- **Type Safety**: ✅ MyPy validated with strict typing
 
 ## 🤝 Contributing
 
