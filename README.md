@@ -345,4 +345,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
+***Rich is Cool***
+
 **Built with ❤️ and comprehensive security scanning | GPG Signed & Verified ✅**
