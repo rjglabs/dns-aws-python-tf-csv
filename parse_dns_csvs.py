@@ -18,12 +18,13 @@ import datetime
 import json
 import os
 import sys
+from typing import Dict, List, Any
 
 base = os.path.dirname(__file__)
 log_path = os.path.join(base, "parse_dns_csvs.log")
 
 
-def write_log(message):
+def write_log(message: str) -> None:
     timestamped = f"[{datetime.datetime.now().isoformat()}] {message}"
     try:
         with open(log_path, "a", encoding="utf-8") as logf:
@@ -76,7 +77,7 @@ record_types = {
     "a_alias_records": "a_alias_records.csv",
 }
 
-result = {}
+result: Dict[str, List[Dict[str, Any]]] = {}
 for dtype, fname in record_types.items():
     path = os.path.join(base, "records", fname)
     if not os.path.exists(path):
@@ -85,7 +86,7 @@ for dtype, fname in record_types.items():
     write_log(f"Processing {fname} ...")
     with open(path, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
-        filtered = []
+        filtered: List[Dict[str, str]] = []
         for row in reader:
             # Only include rows where enabled == 'yes' (case-insensitive)
             if row.get("enabled", "").strip().lower() == "yes":
